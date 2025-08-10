@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Freelancer Dashboard – Dhanisha Tech</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 🔐 Auth + helpers -->
+  <script src="js/auth-check.js"></script>
+  <script>
+    // Page-level guard: allow only Freelancers
+    (function () {
+      if (typeof requireRole === "function") {
+        requireRole("Freelancer");
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">🌀 Dhanisha Tech</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="login-btn" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Banner -->
+  <div class="page-banner">
+    <h1>📥 Freelancer Dashboard</h1>
+    <p>Assigned tasks, deliverables, and progress tracking.</p>
+  </div>
+
+  <!-- ✅ Main Content -->
+  <section class="login-section" id="freelancerArea">
+    <div id="freelancerWelcome" style="margin-bottom:16px;"></div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>📋 Assigned Projects</h3>
+        <p>देखें कौन-कौन से tasks आपको दिए गए हैं और उनकी deadlines.</p>
+        <a class="btn" href="assigned.html">Open Assigned →</a>
+      </div>
+
+      <div class="card">
+        <h3>⬆️ Upload Deliverable</h3>
+        <p>ZIP/APK/screenshots अपलोड करें और status अपडेट रखें.</p>
+        <a class="btn" href="deliverables.html">My Deliverables →</a>
+      </div>
+
+      <div class="card">
+        <h3>👤 Profile</h3>
+        <p>अपनी details देखें/अपडेट करें.</p>
+        <a class="btn" href="profile.html?view=1">Open Profile →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2025 Dhanisha Tech. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Inline Script: greet user -->
+  <script>
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+        const box = document.getElementById("freelancerWelcome");
+        if (u && box) {
+          box.innerHTML = `<p><strong>Name:</strong> ${u.name || "-"} &nbsp; | &nbsp; <strong>Email:</strong> ${u.email || "-"}</p>`;
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
