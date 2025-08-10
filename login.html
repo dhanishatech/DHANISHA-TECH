@@ -5,6 +5,7 @@
   <title>Login / Sign Up – Dhanisha Tech</title>
   <link rel="stylesheet" href="css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Login or create an account to access Dhanisha Tech client/freelancer dashboard." />
 </head>
 <body>
 
@@ -25,26 +26,36 @@
     <p>Please login or create an account</p>
   </div>
 
-  <!-- ✅ Login / Signup Form -->
+  <!-- ✅ Login / Signup Form (UI only) -->
   <section class="login-section">
-    <form class="login-form" id="authForm">
+    <form class="login-form" id="authForm" novalidate>
       <label for="authType">Action:</label>
-      <select id="authType" required>
-        <option value="login">Login</option>
+      <select id="authType">
+        <option value="login" selected>Login</option>
         <option value="signup">Sign Up</option>
       </select>
 
-      <label for="role">Select Role:</label>
-      <select id="role" required>
+      <label for="role">Select Role (Signup only):</label>
+      <!-- ⛔️ required हटाया गया: Login मोड में block नहीं होगा -->
+      <select id="role">
         <option value="">-- Choose --</option>
         <option value="Client">👨‍💼 Client</option>
         <option value="Freelancer">👨‍💻 Freelancer</option>
         <option value="Admin">🧑‍💼 Admin</option>
       </select>
 
-      <input type="text" id="name" placeholder="Name (Signup only)" />
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
+      <label for="name">Name (Signup only):</label>
+      <!-- ⛔️ required हटाया गया: Login मोड में block नहीं होगा -->
+      <input type="text" id="name" placeholder="Your Name" autocomplete="name" />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Email" autocomplete="email" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+
+      <!-- 📣 Message placeholder: JS बाद में भरेगा -->
+      <p id="msg" class="form-msg" aria-live="polite"></p>
 
       <button type="submit">Continue</button>
     </form>
@@ -60,8 +71,8 @@
     <p>&copy; 2025 Dhanisha Tech. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ Script -->
-  <script src="js/login.js"></script>
+  <!-- ⛔️ अभी JS wiring नहीं (Milestone‑3 में जोड़ेंगे) -->
+  <!-- <script src="js/login.js"></script> -->
 
 </body>
 </html>
