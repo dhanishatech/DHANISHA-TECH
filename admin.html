@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard – Dhanisha Tech</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 🔐 Auth + helpers -->
+  <script src="js/auth-check.js"></script>
+  <script>
+    // Page-level guard: allow only Admins
+    (function () {
+      if (typeof requireRole === "function") {
+        requireRole("Admin");
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">🌀 Dhanisha Tech</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="login-btn" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Banner -->
+  <div class="page-banner">
+    <h1>🧑‍💼 Admin Dashboard</h1>
+    <p>Manage projects, users, and system settings.</p>
+  </div>
+
+  <!-- ✅ Main Content -->
+  <section class="login-section" id="adminArea">
+    <div id="adminWelcome" style="margin-bottom:16px;"></div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>🧩 Assign Projects</h3>
+        <p>Clients के requests को Freelancers को assign करें और deadlines सेट करें।</p>
+        <a class="btn" href="assign-projects.html">Open Assignments →</a>
+      </div>
+
+      <div class="card">
+        <h3>👥 All Users</h3>
+        <p>Clients/Freelancers की list देखें, roles जाँचें, status verify करें।</p>
+        <a class="btn" href="users.html">Open Users →</a>
+      </div>
+
+      <div class="card">
+        <h3>📜 System Logs</h3>
+        <p>Recent logins, actions और errors की monitoring.</p>
+        <a class="btn" href="logs.html">Open Logs →</a>
+      </div>
+
+      <div class="card">
+        <h3>👤 Profile</h3>
+        <p>Admin profile / settings देखें या अपडेट करें।</p>
+        <a class="btn" href="profile.html?view=1">Open Profile →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2025 Dhanisha Tech. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Inline Script: greet user -->
+  <script>
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+        const box = document.getElementById("adminWelcome");
+        if (u && box) {
+          box.innerHTML = `<p><strong>Name:</strong> ${u.name || "-"} &nbsp; | &nbsp; <strong>Email:</strong> ${u.email || "-"}</p>`;
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
