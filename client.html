@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Dashboard – Dhanisha Tech</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 🔐 Auth + helpers (uses your localStorage mock) -->
+  <script src="js/auth-check.js"></script>
+  <script>
+    // Page-level guard: allow only Clients
+    (function () {
+      // auth-check.js exposes `user` and `requireRole`
+      if (typeof requireRole === "function") {
+        requireRole("Client");
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar">
+    <div class="logo">🌀 Dhanisha Tech</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" class="login-btn" onclick="logout()">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Banner -->
+  <div class="page-banner">
+    <h1>📦 Client Dashboard</h1>
+    <p>Welcome back! Manage your orders and requests here.</p>
+  </div>
+
+  <!-- ✅ Main Content -->
+  <section class="login-section" id="clientArea">
+    <div id="clientWelcome" style="margin-bottom:16px;"></div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>📝 Create New Request</h3>
+        <p>Tell us your app/website requirement and get a quick quote.</p>
+        <a class="btn" href="contact.html#contact">Request a Quote →</a>
+      </div>
+
+      <div class="card">
+        <h3>📦 My Orders</h3>
+        <p>Track your project status, milestones, and files.</p>
+        <a class="btn" href="orders.html">Open Orders →</a>
+      </div>
+
+      <div class="card">
+        <h3>👤 Profile</h3>
+        <p>View or update your details.</p>
+        <a class="btn" href="profile.html?view=1">Open Profile →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2025 Dhanisha Tech. All rights reserved.</p>
+  </footer>
+
+  <!-- ✅ Inline Script: greet user -->
+  <script>
+    (function () {
+      try {
+        const u = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+        const box = document.getElementById("clientWelcome");
+        if (u && box) {
+          box.innerHTML = `<p><strong>Name:</strong> ${u.name || "-"} &nbsp; | &nbsp; <strong>Email:</strong> ${u.email || "-"}</p>`;
+        }
+      } catch (e) {
+        // ignore
+      }
+    })();
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
