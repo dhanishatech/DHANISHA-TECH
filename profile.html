@@ -6,8 +6,38 @@
   <link rel="stylesheet" href="css/style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 🔐 Role-check -->
+  <!-- 🔐 Common auth guard (आपके existing auth-check.js) -->
   <script src="js/auth-check.js"></script>
+
+  <script>
+    // ⛳ Role-based redirect: profile.html पर आते ही सही dashboard पर भेज दो
+    (function () {
+      // Debug या profile view के लिए ?view=1 पास करें तो redirect skip
+      const params = new URLSearchParams(location.search);
+      if (params.get("view") === "1") return;
+
+      const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+      if (!user) {
+        // auth-check.js भी redirect करेगा; फिर भी safety
+        window.location.href = "login.html";
+        return;
+      }
+
+      const role = String(user.role || "").toLowerCase();
+      const routes = {
+        client: "client.html",
+        freelancer: "freelancer.html",
+        admin: "admin.html",
+      };
+
+      const target = routes[role];
+      if (target) {
+        // replace() ताकि back दबाने पर वापस profile पर न फंसे
+        window.location.replace(target);
+      }
+      // अगर role unknown हुआ तो नीचे fallback profile दिखेगा
+    })();
+  </script>
 </head>
 <body>
 
@@ -29,11 +59,14 @@
     <p>Welcome to your dashboard</p>
   </div>
 
-  <!-- ✅ Profile Details -->
+  <!-- ✅ Profile Details / Fallback view -->
   <section class="login-section">
     <div id="profileContent">
       <!-- Profile data will be injected here -->
     </div>
+
+    <!-- Fallback CTA: अगर redirect इरादतन रोका हो (view=1), तो role-based buttons -->
+    <div id="roleCtas" style="margin-top:16px;"></div>
   </section>
 
   <!-- ✅ Footer -->
@@ -46,35 +79,50 @@
     <p>&copy; 2025 Dhanisha Tech. All rights reserved.</p>
   </footer>
 
-  <!-- ✅ Script -->
+  <!-- ✅ Inline Script: fallback profile render + role link -->
   <script>
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    (function () {
+      const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+      if (!user) return; // auth-check handle करेगा
 
-    if (!user) {
-      alert("Please login first.");
-      window.location.href = "login.html";
-    } else {
-      // Show profile data
-      document.getElementById("profileContent").innerHTML = `
-        <p><strong>Name:</strong> ${user.name}</p>
-        <p><strong>Email:</strong> ${user.email}</p>
-        <p><strong>Role:</strong> ${user.role}</p>
+      // Show profile data (fallback / debug mode)
+      const pc = document.getElementById("profileContent");
+      pc.innerHTML = `
+        <p><strong>Name:</strong> ${user.name || "-"}</p>
+        <p><strong>Email:</strong> ${user.email || "-"}</p>
+        <p><strong>Role:</strong> ${user.role || "-"}</p>
       `;
 
-      // Role-based navigation link
+      // Role-based nav link (fallback)
       const navLinks = document.getElementById("navLinks");
-      const roleLink = document.createElement("li");
+      const roleLi = document.createElement("li");
+      const role = String(user.role || "").toLowerCase();
 
-      if (user.role === "Client") {
-        roleLink.innerHTML = `<a href="orders.html">📦 My Orders</a>`;
-      } else if (user.role === "Freelancer") {
-        roleLink.innerHTML = `<a href="deliverables.html">📥 My Deliverables</a>`;
-      } else if (user.role === "Admin") {
-        roleLink.innerHTML = `<a href="assign-projects.html">🧑‍💼 Assign Projects</a>`;
+      if (role === "client") {
+        roleLi.innerHTML = `<a href="client.html">📦 Client Dashboard</a>`;
+      } else if (role === "freelancer") {
+        roleLi.innerHTML = `<a href="freelancer.html">📥 Freelancer Dashboard</a>`;
+      } else if (role === "admin") {
+        roleLi.innerHTML = `<a href="admin.html">🧑‍💼 Admin Dashboard</a>`;
+      } else {
+        roleLi.innerHTML = `<a href="login.html">Re-login</a>`;
       }
+      // Logout से ठीक पहले insert करें
+      navLinks.insertBefore(roleLi, navLinks.children[3]);
 
-      navLinks.insertBefore(roleLink, navLinks.children[3]); // Add before logout
-    }
+      // Fallback CTAs (जब ?view=1 से profile खुला हो)
+      const ctas = document.getElementById("roleCtas");
+      const map = {
+        client: "client.html",
+        freelancer: "freelancer.html",
+        admin: "admin.html",
+      };
+      if (map[role]) {
+        ctas.innerHTML = `
+          <a class="btn" href="${map[role]}">Go to ${user.role} Dashboard →</a>
+        `;
+      }
+    })();
 
     function logout() {
       localStorage.removeItem("loggedInUser");
