@@ -1,0 +1,17 @@
+<!doctype html><html><head>
+<meta charset="utf-8"><title>Uploads & Downloads — Dhanisha Tech</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/firebase.js"></script><script type="module" src="js/auth-check.js"></script>
+<script type="module" src="js/nav-auth.js"></script><script type="module" src="js/role-guards.js"></script>
+<script type="module" src="js/uploads.js"></script>
+</head><body>
+<header class="navbar"><a class="brand" href="index.html">Dhanisha Tech</a><nav>
+  <a href="dashboard.html" data-private class="hidden">Profile</a>
+  <button data-login-btn class="btn">Login</button><div data-profile class="hidden profile"><span data-profile-name></span><span class="chip" data-role-chip>role</span><button class="btn-outline" data-logout>Logout</button></div>
+</nav></header>
+<main class="container"><h1>Project Files</h1>
+<section class="card" data-role="freelancer"><h2>Upload Deliverable</h2>
+<label>Project: <select id="projectSel" class="btn-outline"></select></label>
+<div class="mt"><input id="file" type="file"> <button id="upload" class="btn">Upload</button></div></section>
+<section class="card" data-role="client,freelancer,admin"><h2>Deliveries</h2><ul id="deliveries" class="list"><li>Loading…</li></ul></section>
+</main></body></html>
