@@ -1,0 +1,15 @@
+<!doctype html><html><head>
+<meta charset="utf-8"><title>Dashboard — Dhanisha Tech</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/firebase.js"></script><script type="module" src="js/auth-check.js"></script>
+<script type="module" src="js/nav-auth.js"></script><script type="module" src="js/role-guards.js"></script>
+</head><body>
+<header class="navbar"><a class="brand" href="index.html">Dhanisha Tech</a><nav>
+  <a href="dashboard.html" data-private class="hidden">Profile</a>
+  <button data-login-btn class="btn">Login</button><div data-profile class="hidden profile"><span data-profile-name></span><span class="chip" data-role-chip>role</span><button class="btn-outline" data-logout>Logout</button></div>
+</nav></header>
+<main class="container"><h1>Your Profile</h1>
+<section data-role="client" class="card hidden"><b>Client Area</b> — <a href="project-new.html">Start Project</a> • <a href="projects.html">Projects</a> • <a href="orders.html">Orders</a> • <a href="uploads.html">Downloads</a></section>
+<section data-role="freelancer" class="card hidden"><b>Freelancer Area</b> — <a href="jobs.html">Jobs</a> • <a href="uploads.html">Uploads</a></section>
+<section data-role="admin" class="card hidden"><b>Admin</b> — (Open Firestore Console to create products/offers; or extend with admin console later)</section>
+</main></body></html>
