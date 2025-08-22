@@ -1,0 +1,16 @@
+<!doctype html><html><head>
+<meta charset="utf-8"><title>Offers — Dhanisha Tech</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/firebase.js"></script><script type="module" src="js/auth-check.js"></script>
+<script type="module" src="js/nav-auth.js"></script><script type="module" src="js/role-guards.js"></script>
+<script type="module" src="js/offers.js"></script>
+</head><body>
+<header class="navbar"><a class="brand" href="index.html">Dhanisha Tech</a><nav>
+  <a href="dashboard.html" data-private class="hidden">Profile</a>
+  <button data-login-btn class="btn">Login</button><div data-profile class="hidden profile"><span data-profile-name></span><span class="chip" data-role-chip>role</span><button class="btn-outline" data-logout>Logout</button></div>
+</nav></header>
+<main class="container"><h1>Offers</h1>
+<div class="card" data-role="client">Client‑only offers</div>
+<div class="card hidden" data-role="freelancer">Freelancer‑only offers</div>
+<ul id="offersList" class="grid grid-3"><li class="card">Loading…</li></ul>
+</main></body></html>
