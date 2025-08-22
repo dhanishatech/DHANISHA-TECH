@@ -1,0 +1,22 @@
+<!doctype html><html><head>
+<meta charset="utf-8"><title>Start a Project — Dhanisha Tech</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/firebase.js"></script><script type="module" src="js/auth-check.js"></script>
+<script type="module" src="js/nav-auth.js"></script><script type="module" src="js/project-new.js"></script>
+</head><body>
+<header class="navbar"><a class="brand" href="index.html">Dhanisha Tech</a><nav>
+  <a href="dashboard.html" data-private class="hidden">Profile</a>
+  <button data-login-btn class="btn">Login</button><div data-profile class="hidden profile"><span data-profile-name></span><span class="chip" data-role-chip>role</span><button class="btn-outline" data-logout>Logout</button></div>
+</nav></header>
+<main class="container"><h1>Start a Project</h1>
+<div class="card">
+  <label>Type <select id="ptype" class="btn-outline"><option>Android App</option><option>Business Website</option><option>SaaS Dashboard</option></select></label><br/><br/>
+  <label>Budget (₹) <input id="budget" class="btn-outline" placeholder="60000-120000"></label><br/><br/>
+  <label>Deadline (days) <input id="days" type="number" class="btn-outline" value="14"></label><br/><br/>
+  <label>Key Features <input id="features" class="btn-outline" placeholder="login, payment, admin"></label><br/><br/>
+  <label>Description <textarea id="desc" rows="5" class="btn-outline"></textarea></label><br/>
+  <div class="card"><b>Required:</b> target users, must‑have screens, design refs, integrations.</div>
+  <button class="btn" id="submit">Submit</button>
+</div>
+</main>
+</body></html>
